@@ -1629,13 +1629,18 @@ class BertForQuestionAnswering(BertPreTrainedModel):
         )
 
         sequence_output = outputs[0]
-
+        print('sequence_output■', len(sequence_output))
         logits = self.qa_outputs(sequence_output)
+        print('logits■', len(logits), len(logits[0]))
         start_logits, end_logits = logits.split(1, dim=-1)
+        print('start_logits/end_logits■', len(start_logits), len(end_logits))
         start_logits = start_logits.squeeze(-1)
+        print('start_logits■', len(start_logits))
         end_logits = end_logits.squeeze(-1)
-
+        print('end_logits■', len(end_logits))
+        
         outputs = (start_logits, end_logits,) + outputs[2:]
+        print('outputs■', outputs, len(outputs))
         if start_positions is not None and end_positions is not None:
             # If we are on multi-GPU, split add a dimension
             if len(start_positions.size()) > 1:
