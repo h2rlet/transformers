@@ -1627,20 +1627,20 @@ class BertForQuestionAnswering(BertPreTrainedModel):
             output_attentions=output_attentions,
             output_hidden_states=output_hidden_states,
         )
-
+        print('first outputs■', outputs, len(outputs))
         sequence_output = outputs[0]
-        print('sequence_output■', len(sequence_output))
+        print('sequence_output■', len(sequence_output), len(sequence_output[0]))
         logits = self.qa_outputs(sequence_output)
         print('logits■', len(logits), len(logits[0]))
         start_logits, end_logits = logits.split(1, dim=-1)
-        print('start_logits/end_logits■', len(start_logits), len(end_logits))
+        print('start_logits/end_logits■', len(start_logits), len(start_logits[0]), len(end_logits), len(end_logits[0]))
         start_logits = start_logits.squeeze(-1)
-        print('start_logits■', len(start_logits))
+        print('start_logits■', len(start_logits),len(start_logits[0]))
         end_logits = end_logits.squeeze(-1)
-        print('end_logits■', len(end_logits))
+        print('end_logits■', len(end_logits), len(end_logits[0]))
         
         outputs = (start_logits, end_logits,) + outputs[2:]
-        print('outputs■', outputs, len(outputs))
+        print('outputs■', outputs, len(outputs), len(outputs[0]))
         if start_positions is not None and end_positions is not None:
             # If we are on multi-GPU, split add a dimension
             if len(start_positions.size()) > 1:
